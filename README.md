@@ -1,8 +1,3 @@
-# Gitlab alaScrapy Repository
-
-Imported November 2nd, 2017 (by Erik)
-
-
 ### environment setup
 
 #### fabric
