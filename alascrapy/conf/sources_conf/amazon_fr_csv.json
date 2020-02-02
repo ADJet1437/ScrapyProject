@@ -1,0 +1,109 @@
+{
+    "source_id": 263863, 
+    "use_proxy": false,
+    "validate_csv_fields": {
+        "product": {
+            "ProductName": {
+                "required": true
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "source_id": {
+                "required": true
+            }, 
+            "TestUrl": {
+                "required": true
+            }, 
+            "ProductManufacturer": {
+                "required": false
+            }, 
+            "OriginalCategoryName": {
+                "required": true
+            }, 
+            "PicURL": {
+                "required": false
+            }
+        }, 
+        "product_id": {
+            "source_id": {
+                "required": true
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "ProductName": {
+                "required": true
+            }, 
+            "ID_value": {
+                "required": true
+            }, 
+            "ID_kind": {
+                "required": true
+            }
+        }, 
+        "review": {
+            "SourceTestRating": {
+                "required": true
+            }, 
+            "DBaseCategoryName": {
+                "required": true
+            }, 
+            "SourceTestScale": {
+                "required": true
+            }, 
+            "AwardPic": {
+                "required": false
+            }, 
+            "countries": {
+                "required": false
+            }, 
+            "Author": {
+                "required": true
+            }, 
+            "award": {
+                "required": false
+            }, 
+            "ProductName": {
+                "required": true
+            }, 
+            "TestCons": {
+                "required": true
+            }, 
+            "TestDateText": {
+                "required": true
+            }, 
+            "source_id": {
+                "required": true
+            }, 
+            "TestUrl": {
+                "required": true
+            }, 
+            "TestPros": {
+                "required": true
+            }, 
+            "TestTitle": {
+                "required": true
+            }, 
+            "TestVerdict": {
+                "required": false
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "TestSummary": {
+                "required": false
+            }
+        }
+    }, 
+    "feed_categories": {
+        "pc_delta_rt": "2016-02-02 05:37:47", 
+        "large_appliances_delta_rt": "2016-02-02 04:17:10", 
+        "ce_delta_rt": "2016-02-02 04:20:52", 
+        "large_appliances_delta_mp": "2016-02-02 04:16:56", 
+        "ce_delta_mp": "2016-02-02 04:17:27", 
+        "vg_delta_rt": "2016-02-02 04:11:41", 
+        "vg_delta_mp": "2016-02-02 04:11:09", 
+        "pc_delta_mp": "2016-02-02 05:37:37"
+    }
+}

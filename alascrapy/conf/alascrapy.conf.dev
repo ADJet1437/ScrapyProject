@@ -1,0 +1,63 @@
+[OUTPUT]
+running_directory = /var/local/load/running/
+finished_directory = /var/local/load/finished/
+amazon_directory = /var/local/load/amazon/
+
+db_output_enabled = false
+csv_output_enabled = true
+add_new_categories = false
+send_mq_request = false
+send_mq_request_local = false
+update_incremental_kind = false
+
+[LOAD]
+host = structuring901.office.alatest.se
+virtual_host = load
+username = load
+password = load
+queue = inbox
+exchange = load
+routing_key = inbox
+host_to_store_csv = alascrapy901.office.alatest.se
+
+[LOGGING]
+graylog_host = 127.0.0.1
+graylog_port = 12201
+log_level = INFO
+base_log_dir = /var/log/alaScrapy
+
+[DATABASE]
+host = vinnie.office.alatest.se
+username = alascrapy
+password = alascrapy
+
+[NEO4J]
+host = neo4j901.office.alatest.se:7474
+username = neo4j
+password = sysneo67
+
+[PROXY]
+vpn_proxy = vpnproxy901.office.alatest.se:8118
+http_proxy = http://vpnproxy901.office.alatest.se:8118, http://ssproxy901.office.alatest.se:8129, http://ssproxy901.office.alatest.se:8230, http://ssproxy901.office.alatest.se:8321, http://ssproxy901.office.alatest.se:8421, http://ssproxy901.office.alatest.se:8522, http://ssproxy901.office.alatest.se:8623, http://ssproxy901.office.alatest.se:8724
+https_proxy = https://vpnproxy901.office.alatest.se:8118, https://ssproxy901.office.alatest.se:8129, https://ssproxy901.office.alatest.se:8230, https://ssproxy901.office.alatest.se:8321, https://ssproxy901.office.alatest.se:8421, https://ssproxy901.office.alatest.se:8522, https://ssproxy901.office.alatest.se:8623, https://ssproxy901.office.alatest.se:8724
+no_proxy = hometheaterhifi.com, useragentstring.com, assoc-datafeeds-eu.amazon.com, altroconsumo.it, webservices.amazon.com, webservices.amazon.de, webservices.amazon.fr, webservices.amazon.it, webservices.amazon.es, webservices.amazon.co.uk, api.bol.com, mediaworld.it, radron.se, test.de
+vpn_only = notebookcheck.com, notebookcheck.net, notebookcheck.org, notebookcheck.info, notebookcheck.it, notebookcheck.nl, notebookcheck.biz, notebookcheck-tr.com, notebookcheck-ru.com, notebookcheck.se, maistecnologia.com, sennheiser.com, productreview.com.au, pricespy.co.uk, techadvisor.co.uk, techaeris.com, soundandvision.com, tesco.com, androidauthority.com, kitguru.net, imaging-resource.com, tweakers.net
+
+[SCHEDULER]
+host = structuring901.office.alatest.se
+virtual_host = alascrapy
+username = alascrapy
+password = alascrapy
+exchange = alascrapy
+spider_queue = spiders
+spider_routing_key = inbox
+amazon_review_spider_queue = amazon_reviews_spiders
+amazon_review_routing_key = amazon_reviews
+
+[RUN]
+graphic_browser = false
+firefox_profile = /home/alascrapy/firefox_profile
+tmp_dir = /tmp/alaScrapy
+
+[AMAZON]
+api_version = 2011-08-01

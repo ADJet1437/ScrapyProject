@@ -1,0 +1,101 @@
+{
+    "source_id": 230492,
+    "validate_csv_fields": {
+        "product": {
+            "ProductName": {
+                "required": true
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "source_id": {
+                "required": true
+            },
+            "TestUrl": {
+                "required": true
+            },
+            "ProductManufacturer": {
+                "required": false
+            },
+            "OriginalCategoryName": {
+                "required": true
+            },
+            "PicURL": {
+                "required": false
+            }
+        },
+        "amazon_product" : {
+
+        },
+        "product_id": {
+            "source_id": {
+                "required": true
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "ProductName": {
+                "required": true
+            },
+            "ID_value": {
+                "required": true
+            },
+            "ID_kind": {
+                "required": true
+            }
+        },
+        "review": {
+            "SourceTestRating": {
+                "required": true
+            },
+            "DBaseCategoryName": {
+                "required": true
+            },
+            "SourceTestScale": {
+                "required": true
+            },
+            "AwardPic": {
+                "required": false
+            },
+            "countries": {
+                "required": false
+            },
+            "Author": {
+                "required": true
+            },
+            "award": {
+                "required": false
+            },
+            "ProductName": {
+                "required": true
+            },
+            "TestCons": {
+                "required": true
+            },
+            "TestDateText": {
+                "required": true
+            },
+            "source_id": {
+                "required": true
+            },
+            "TestUrl": {
+                "required": true
+            },
+            "TestPros": {
+                "required": true
+            },
+            "TestTitle": {
+                "required": true
+            },
+            "TestVerdict": {
+                "required": false
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "TestSummary": {
+                "required": false
+            }
+        }
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "source_id": 88809,
+    "enabled":true,
+    "validate_csv_fields":{
+        "product":{
+                    "source_id":            {"required": true},
+                    "source_internal_id":   {"required": true},
+                    "ProductName":          {"required": true},
+                    "OriginalCategoryName": {"required": false},
+                    "PicURL":               {"required": true},
+                    "ProductManufacturer":  {"required": false},
+                    "TestUrl":              {"required": true}
+        },
+        "review":{
+                "source_id":          {"required": true},
+                "source_internal_id": {"required": true},
+                "ProductName":        {"required": true},
+                "SourceTestRating":   {"required": false},
+                "SourceTestScale":    {"required": false},
+                "TestDateText":       {"required": true},
+                "TestPros":           {"required": false},
+                "TestCons":           {"required": false},
+                "TestSummary":        {"required": true},
+                "TestVerdict":        {"required": false},
+                "Author":             {"required": true},
+                "DBaseCategoryName":  {"required": true},
+                "TestTitle":          {"required": true},
+                "TestUrl":            {"required": true},
+                "award":              {"required": false},
+                "AwardPic":           {"required": false},
+                "countries":          {"required": false}
+        }
+    }
+}

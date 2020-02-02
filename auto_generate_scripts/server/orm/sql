@@ -1,0 +1,26 @@
+CREATE TABLE `temp`.`alascrapy_spiders` (
+  `spider_id` int(11) NOT NULL AUTO_INCREMENT,
+  `source_id` int(11) NOT NULL DEFAULT '0',
+  `script_name` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `crawl_type` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`spider_id`),
+  KEY `idx_source_id` (`source_id`),
+  KEY `idx_update_time` (`update_time`),
+  UNIQUE (script_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+CREATE TABLE `temp`.`alascrapy_elements` (
+  `element_id` int(11) NOT NULL AUTO_INCREMENT,
+  `spider_id` int(11) NOT NULL,
+  `step_counter` int(11) NOT NULL,
+  `function_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parameter_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parameter_value` mediumtext COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`element_id`),
+  KEY `idx_spider_id` (`spider_id`),
+  KEY `idx_spider_step` (`spider_id`, `step_counter`),
+  KEY `idx_function_name` (`function_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=DYNAMIC;

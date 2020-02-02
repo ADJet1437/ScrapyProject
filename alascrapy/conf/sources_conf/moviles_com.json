@@ -1,0 +1,28 @@
+{
+    "source_id": 34000015,
+    "spider_name": "moviles_com",
+    "spider_class_name": "MovilesComSpider",
+    "enabled":true,
+    "additional_values":{},
+    "validate_csv_fields":{
+        "review":{
+                "source_id":          {"required": true},
+                "source_internal_id": {"required": false},
+                "ProductName":        {"required": true},
+                "SourceTestRating":   {"required": true},
+                "SourceTestScale":    {"required": true},
+                "TestDateText":       {"required": false},
+                "TestPros":           {"required": false},
+                "TestCons":           {"required": false},
+                "TestSummary":        {"required": false},
+                "TestVerdict":        {"required": false},
+                "Author":             {"required": false},
+                "DBaseCategoryName":  {"required": true},
+                "TestTitle":          {"required": true},
+                "TestUrl":            {"required": true},
+                "award":              {"required": false},
+                "AwardPic":           {"required": false},
+                "countries":          {"required": false}
+        }
+    }
+}

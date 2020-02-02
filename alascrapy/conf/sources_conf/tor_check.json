@@ -1,0 +1,6 @@
+{
+    "source_id": -1,
+    "spider_name": "tor_check",
+    "spider_class_name": "TorCheck",
+    "enabled":true
+}

@@ -1,0 +1,11 @@
+# use glob syntax.
+syntax: glob
+
+*.pyc
+*~
+*.egg
+build
+alascrapy.egg-info
+alascrapy/conf/alascrapy.conf
+.idea
+.scrapy/httpcache/*

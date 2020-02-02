@@ -1,0 +1,9 @@
+- Create alaScrapy source information table
+
+  CREATE TABLE `alascrapy_source_information` (
+    `source_id` int(10) NOT NULL DEFAULT '0',
+    `frequency` int(10) NOT NULL DEFAULT '1',
+    `opt_out` set('N','Y') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+    `update_time` timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (`source_id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci

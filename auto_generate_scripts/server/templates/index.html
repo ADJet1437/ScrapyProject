@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Alatest Spiders Generator</title>
+    <link rel="stylesheet" type="text/css" href="{{ static_url("easyui/themes/icon.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url("easyui/themes/default/easyui.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url("easyui/themes/metro/easyui.css") }}">
+    <link rel="stylesheet" type="text/css" href="{{ static_url("easyui/demo/demo.css") }}">
+    <link rel="stylesheet" href="{{ static_url("css/kube.css") }}" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ static_url("css/main.css") }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ static_url("prettify/prettify.css") }}">
+    <script type="text/javascript" src="{{ static_url("prettify/prettify.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("easyui/jquery.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("easyui/jquery.easyui.min.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/util.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("js/jquery.datagrid.extend.js") }}"></script>
+
+
+
+    <script type="text/javascript" src="{{ static_url("js/datagrid-filter.js") }}"></script>
+    <script type="text/javascript" src="{{ static_url("easyui/datagrid-detailview.js") }}"></script> 
+    <link rel="stylesheet" type="text/css" href="{{ static_url("js/jquery.autocomplete.css") }}">
+
+
+    <script type="text/javascript" src="{{ static_url("easyui/treegrid-dnd.js") }}"></script>
+    <style>
+	  .icon-filter{background:url('{{ static_url("js/filter.png") }}') no-repeat center center;}
+    </style>
+  </head>
+
+  <body id="content" class="easyui-layout">
+    
+    <div data-options="region:'west',split:true,title:'Scraping Functions'" style="width: 20%; min-width: 180px; padding: 5px;">
+      <div id="commandmenu" class="easyui-menu" data-options="inline:true" style="width:100%">
+
+      </div>
+    </div>
+    <div data-options="region:'center'" style="width: 100%; min-width: 300px; padding: 2px 2px 50px 2px;">
+      <div style="margin:10px 0;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="load_script()">Load</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save_script()">Save</a> 
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="gen_script()">Generate</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="run_test()">Run</a>
+        |
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="edit_value()">Edit</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="save_value()">Apply</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancel_edit()">Cancel</a>
+        |
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="delete_node()">Delete</a>
+      </div>
+      <table id="dgsd" title="Scraping Designer" class="easyui-treegrid" style="width:100%;"
+             data-options="fit:true,
+                           data:data,
+                           idField:'id',
+                           treeField:'name',
+                           fitColumns:true,
+                           
+                           onDblClickRow:dbl_click_row
+                           ">
+        <thead>
+          <tr>
+            <th data-options="field:'name',width:'320px'">Name</th>
+			<th data-options="field:'value',editor:'text',width:'650px'" align="left">Value</th>
+            <th data-options="field:'helper',width:'650px'" align="left">Helper</th>
+          </tr>  
+        </thead>  
+      </table>
+    </div>
+
+	<div id="result_div" data-options="region:'south',split:true,title:'Result',split:true,collapsed:true" style="width:100%; min-width:300px;  padding:2px;">
+
+      <div id="tabs" class="easyui-tabs" data-options="fit:true" style="width:100%;height:250px;">
+        <div title="Products" data-options="fit:true">
+          <table id="dg_pro" class="easyui-datagrid" style="width:100%;height:512px"
+                 data-options="pagination:'true',
+			                   rownumbers:'true',
+                               fitColumns:'true', 
+                               singleSelect:'true',
+                               pageSize:50,
+                               pageList:[10,50,100,500]
+                               ">
+		<thead>
+			<tr>
+				<th field="source_id" width="50">source_id</th>
+				<th field="source_internal_id" width="50">source_internal_id</th>
+				<th field="ProductName" width="50">ProductName</th>
+				<th field="OriginalCategoryName" width="50">OriginalCategoryName</th>
+				<th field="PicURL" width="50">PicURL</th>
+				<th field="ProductManufacturer" width="50">ProductManufacturer</th>
+				<th field="TestUrl" width="50">TestUrl</th>
+			</tr>
+		</thead>
+	</table>
+        </div>
+        <div title="Product_id" data-options="fit:true">
+          <table id="dg_pid" class="easyui-datagrid"  style="width:100%;height:512px"
+                 data-options="pagination:'true',
+			                   rownumbers:'true',
+                               fitColumns:'true', 
+                               singleSelect:'true',
+                               pageSize:50,
+                               pageList:[10,50,100,500]
+                               ">
+		<thead>
+			<tr>
+				<th field="source_id" width="50">source_id</th>
+				<th field="source_internal_id" width="50">source_internal_id</th>
+				<th field="ProductName" width="50">ProductName</th>
+				<th field="OriginalCategoryName" width="50">OriginalCategoryName</th>
+				<th field="ID_kind" width="50">ID_kind</th>
+				<th field="ID_value" width="50">ID_value</th>
+			</tr>
+		</thead>
+	</table>
+        </div>
+        <div title="Reviews" data-options="fit:true">
+          <table id="dg_rev"  class="easyui-datagrid" style="width:100%;height:512px"
+                 data-options="pagination:'true',
+			                   rownumbers:'true',
+                               fitColumns:true,
+                                singleSelect:'true',
+                               pageSize:50,
+                               pageList:[10,50,100,500]
+                               ">
+		<thead>
+			<tr>
+				<th field="source_id" width="200">source_id</th>
+				<th field="source_internal_id" width="200">source_internal_id</th>
+				<th field="ProductName" width="200">ProductName</th>
+				<th field="SourceTestRating" width="200">SourceTestRating</th>
+				<th field="SourceTestScale" width="200">SourceTestScale</th>
+				<th field="TestDateText" width="200">TestDateText</th>
+				<th field="TestPros" width="200">TestPros</th>
+				<th field="TestCons" width="200">TestCons</th>
+				<th field="TestSummary" width="200">TestSummary</th>
+				<th field="TestVerdict" width="200">TestVerdict</th>
+				<th field="Author" width="200">Author</th>
+				<th field="DBaseCategoryName" width="200">DBaseCategoryName</th>
+				<th field="TestTitle" width="200">TestTitle</th>
+				<th field="TestUrl" width="200">TestUrl</th>
+				<th field="Pay" width="10">Pay</th>
+				<th field="award" width="10">award</th>
+				<th field="AwardPic" width="10">AwardPic</th>
+				<th field="countries" width="10">countries</th>
+				<th field="alltext" width="10">alltext</th>
+			</tr>
+		</thead>
+	</table>
+        </div>
+        <div title="Info" data-options="fit:true">
+          <div id="debug_info">
+          </div>
+        </div>
+      </div>
+     </div>
+  </body>
+  <script type="text/javascript">
+    var data = [{
+    id:1,
+    name:"Scraping Source",
+    value:"",
+    type:"source",
+    form_id:"",
+    children:[{id:2,name:"source_id",value:"",type:"source"},{id:3,name:"Script Name", value:"",type:"source" }]
+    }];
+
+    var form_ids = {
+    'Init Spider':'gen_init',
+    'Add Level':'gen_level',
+    'Request Single Url':'request_single_url',
+    'Request Urls':'request_urls',
+    'Request Containers Url':'request_containers_urls',
+    'Get Category':'get_category',
+    'Generate Product':'gen_product',
+    'Generate Review':'gen_review',
+    'Generate Containers Review':'gen_containers_review',
+    'Get Product Id':'get_product_id',
+    'Get Productname From Title':'get_productname_from_title',
+    'Get Dbasecategoryname':'get_dbasecategoryname',
+    'Get Sourcetestscale':'get_sourcetestscale',
+    'Extract Field':'clean_field',
+    'Normalize Testdatetext':'get_testdatetext',
+    'Get Fields Supplement':'get_fields',
+    'Click':'click',
+    'Click Continuous':'click_continuous',
+    'Scroll':'scroll',
+    'Save Product':'save_product',
+    'Save Review':'save_review'
+    };
+    
+    
+    var menu_text=[{
+    text:'Init Spider',
+    type:'source',
+    form_id:'gen_init',
+    helper:'Initialize Spider',
+    properties:[
+    {text:'Spider Type',name:'spider_type', helper:'the type of spider, now only AlaSpider allowed'},
+    {text:'Allowed Domains',name:'allowed_domains', helper:"allowed scraping domain. eg. 'dell.com'; 'sony.nl'. multiple domains allowed "},
+    {text:'Start Urls',name:'start_urls', helper:"the first urls when spider scrapes. eg. 'http://www.dell.com/'; 'http://www.sony.nl/all-electronics'. multiple domains allowed"}
+    ]},
+    {text:'Add Level',
+    type:'source',
+    form_id:'gen_level',
+    helper:'Scrape to next level',
+    properties:[
+    {text:'Level Index',name:'level_index', helper:'the number of this Level. eg. 1, 2, 3'},
+    {text:'Need Parse Javascript ? (yes/no)', name:'need_parse_javascript', helper:'whether to parse this level as ajax page. if yes, scraping speed will be very slow.'}
+    ]},
+    {text:'Request Single Url',
+    type:'parser',
+    form_id:'request_single_url',
+    helper:'request a single url',
+    properties:[
+    {text:'Url Xpath',name:'url_xpath', helper:'xpath to get the url'},
+    {text:'Level Index',name:'level_index', helper:'which level to process this url'},
+    {text:'Url Regex',name:'url_regex', helper:'Use regex to extract the url, if needed.'},
+    {text:'Product Fields',name:'product_fields', helper:'transfer product item to that level'}
+    ]},
+    {text:'Request Urls',
+    type:'parser',
+    form_id:'request_urls',
+    helper:'request multiple urls',
+    properties:[
+    {text:'Urls Xpath',name:'urls_xpath', helper:'xpath to get the urls'},
+    {text:'Level Index',name:'level_index', helper:'which level to process those url'},
+    {text:'Url Regex',name:'url_regex', helper:'Use regex to extract the urls, if needed.'},
+    {text:'Need Include Original Url ? (yes/no)',name:'include_original_url', helper:'need to process those urls in the current Level?'},
+    {text:'Fields Xpath',name:'params_xpath', helper:'xpath to get the necessary content and send them to the next levels'},
+    {text:'Fields Regex',name:'params_regex', helper:'Use regex to extract the content, if needed.'}
+    ]},
+    {text:'Request Containers Urls',
+    type:'parser',
+    form_id:'request_containers_urls',
+    helper:'request the urls from multiple containers',
+    properties:[
+    {text:'Containers Xpath',name:'containers_xpath', helper:'xpath to get the containers'},
+    {text:'Url Xpath (in Container)',name:'url_xpath', helper:'xpath to get the urls in the containers'},
+    {text:'Level Index',name:'level_index', helper:'in which level to process the above urls '},
+    {text:'Fields Xpath (in Container)',name:'params_xpath', helper:'xpath to get the content in the container and send them to the next level.'},
+    {text:'Fields Regex (in Container)',name:'params_regex', helper:'Use regex to extract the items from the above content'}
+    ]},
+    {text:'Get Category',
+    type:'parser',
+    form_id:'get_category',
+    helper:'Get category info.',
+    properties:[
+    {text:'Category Leaf Xpath',name:'category_leaf_xpath', helper:"xpath to get the leaf category. eg. //div[@class='breadCrumb']//li[a][last()]/a/text()； //ul[contains(@class, 'breadcrumbs')]//li[@itemprop][last()]//text()"},
+    {text:'Category Path Xpath',name:'category_path_xpath', helper:"xpath to get the whole category. eg. //div[@class='breadCrumb']//a/text()； //ul[contains(@class, 'breadcrumbs')]//li[a]//text()"},
+    ]},
+    {text:'Generate Product',
+    type:'parser',
+    form_id:'gen_product',
+    helper:'Initialize product info',
+    properties:[
+    {text:'Source_internal_id Xpath',name:'sii_xpath',helper:'xpath to get the id of the target website. eg. mpn, ean, sku or internal id'},
+    {text:'ProductName Xpath',name:'pname_xpath', helper:'xpath to get the product name'},
+    {text:'OriginalCategoryName Xpath',name:'ocn_xpath', helper:'xpath to get the category'},
+    {text:'PicURL Xpath',name:'pic_xpath', helper:'xpath to get the picture url'},
+    {text:'ProductManufacturer Xpath',name:'manuf_xpath', helper:'xpath to get the brand or manufacturer. also can set brandname here. eg. sony, samsung, apple.'}
+    ]},
+    {text:'Generate Review',
+    type:'parser',
+    form_id:'gen_review',
+    helper:'Initialize review info',
+    properties:[
+    {text:'Source_internal_id Xpath',name:'sii_xpath', helper:'xpath to get the id of the target website. eg. mpn, ean, sku or internal id'},
+    {text:'ProductName Xpath',name:'pname_xpath', helper: 'xpath to get the productname, if no productname appears, fetch review title instead.'},
+    {text:'SourceTestRating Xpath',name:'rating_xpath', helper:'xpath to get review rating.'},
+    {text:'TestDateText Xpath',name:'date_xpath', helper:'xpath to get review date.'},
+    {text:'TestPros Xpath',name:'pros_xpath', helper:'xpath to get the pros of the review'},
+    {text:'TestCons Xpath',name:'cons_xpath', helper:'xpath to get the cons of the review'},
+    {text:'TestSummary Xpath',name:'summary_xpath', helper:'xpath to get the summary of the review'},
+    {text:'TestVerdict Xpath',name:'verdict_xpath', helper:'xpath to get the verdict of the review. pro reviews may conatins verdict.'},
+    {text:'Author Xpath',name:'author_xpath', helper:'xpath to get the author of the review'},
+    {text:'TestTitle Xpath',name:'title_xpath', helper:'xpath to get the title of the review'},
+    {text:'award Xpath',name:'award_xpath', helper:'xpath to get the award info of the review'},
+    {text:'AwardPic Xpath',name:'awpic_xpath', helper:'xpath to get the award pic of the review.'}
+    ]},
+    {text:'Generate Containers Review',
+    type:'parser',
+    form_id:'gen_containers_review',
+    properties:[
+    {text:'Containers Xpath',name:'containers_xpath'},
+    {text:'Button Next Javascript ? (yes/no)',name:'button_next_javascript'},
+    {text:'Button Next Xpath',name:'button_next_xpath'},
+    {text:'Source_internal_id Xpath',name:'sii_xpath'},
+    {text:'ProductName Xpath',name:'pname_xpath'},
+    {text:'SourceTestRating Xpath',name:'rating_xpath'},
+    {text:'TestDateText Xpath',name:'date_xpath'},
+    {text:'TestPros Xpath',name:'pros_xpath'},
+    {text:'TestCons Xpath',name:'cons_xpath'},
+    {text:'TestSummary Xpath',name:'summary_xpath'},
+    {text:'TestVerdict Xpath',name:'verdict_xpath'},
+    {text:'Author Xpath',name:'author_xpath'},
+    {text:'TestTitle Xpath',name:'title_xpath'},
+    {text:'award Xpath',name:'award_xpath'},
+    {text:'AwardPic Xpath',name:'awpic_xpath'}
+    ]},
+    {text:'Get Product Id',
+    type:'parser',
+    form_id:'get_product_id',
+    properties:[
+    {text:'Id Value Xpath',name:'id_value_xpath'},
+    {text:'Id Kind',name:'id_kind'}
+    ]},
+    {text:'Get Productname From Title',
+    type:'parser',
+    form_id:'get_productname_from_title',
+    properties:[
+    {text:'Replace Words',name:'replace_words'}
+    ]},
+    {text:'Get Dbasecategoryname',
+    type:'parser',
+    form_id:'get_dbasecategoryname',
+    properties:[
+    {text:'Dbasecategoryname',name:'dbcn'}
+    ]},
+    {text:'Get Sourcetestscale',
+    type:'parser',
+    form_id:'get_sourcetestscale',
+    properties:[
+    {text:'Sourcetestscale',name:'scale'},
+    {text:'PRO / USER',name:'review_type'}
+    ]},
+    {text:'Extract Field',
+    type:'parser',
+    form_id:'clean_field',
+    properties:[
+    {text:'Type',name:'type'},
+    {text:'Field',name:'field'},
+    {text:'Regex',name:'regex'},
+    {text:'PRO / USER',name:'review_type'}
+    ]},
+    {text:'Normalize Testdatetext',
+    type:'parser',
+    form_id:'get_testdatetext',
+    properties:[
+    {text:'Replace Words',name:'replace_words'},
+    {text:'Date Format',name:'format_string'},
+    {text:'Language',name:'languages'},
+    {text:'PRO / USER',name:'review_type'}
+    ]},
+    {text:'Get Fields Supplement',
+    type:'parser',
+    form_id:'get_fields',
+    properties:[
+    {text:'In Another Page Xpath',name:'target_xpath'},
+    {text:'Testverdict Xpaths',name:'test_verdict_xpaths'},
+    {text:'Pros Xpath',name:'pros_xpath'},
+    {text:'Cons Xpath',name:'cons_xpath'},
+    {text:'SourceTestRating Xpath',name:'rating_xpath'},
+    {text:'award Xpath',name:'award_xpath'},
+    {text:'AwardPic Xpath',name:'award_pic_xpath'}
+    ]},
+    {text:'Click',
+    type:'parser',
+    form_id:'click',
+    properties:[
+    {text:'Target Xpath',name:'target_xpath'},
+    {text:'Wait For Xpath',name:'wait_for_xpath'},
+    {text:'Wait Type',name:'wait_type'}
+    ]},
+    {text:'Click Continuous',
+    type:'parser',
+    form_id:'click_continuous',
+    properties:[
+    {text:'Target Xpath',name:'target_xpath'},
+    {text:'Wait For Xpath',name:'wait_for_xpath'},
+    {text:'Wait Type',name:'wait_type'}
+    ]},
+    {text:'Scroll',
+    type:'parser',
+    form_id:'scroll',
+    properties:[
+    {text:'Wait For Xpath',name:'wait_for_xpath'},
+    {text:'Wait Type',name:'wait_type'}
+    ]},
+    {text:'Save Product',
+    type:'parser',
+    form_id:'save_product',
+    properties:[
+    {text:'PRO / USER',name:'pro_type'}
+    ]},
+    {text:'Save Review',
+    type:'parser',
+    form_id:'save_review',
+    properties:[
+    {text:'PRO / USER',name:'review_type'}
+    ]},
+    ];
+    var lastLevelId = 3;
+    var lastid = 3;
+    function load_menu()
+    {
+      $.each(menu_text, function(i, item){
+        $('#commandmenu').menu('appendItem', {text:item['text'], onclick:function(){click_menu(this);}});
+      });
+    }
+    function click_menu(menuitem)
+    {
+      var item_label = $(menuitem).text();
+      var result = $.grep(menu_text, function(value){
+        return value.text == item_label;
+      });
+      if (result.length == 1) {
+        var item = result[0];
+        lastid = lastid + 1;
+        if (item.type=='source'){
+          $("#dgsd").treegrid("append", {parent:1, data:[{id:lastid, name:item.text}]});
+          lastLevelId = lastid;
+        }else
+          $("#dgsd").treegrid("append", {parent:lastLevelId, data:[{id:lastid, name:item.text, helper:item.helper}]});
+        $("#dgsd").treegrid("enableDnd", lastid);
+        var newitemid = lastid;
+        $.each(item.properties, function(i, prop){
+          lastid = lastid + 1;
+          $("#dgsd").treegrid("append",{parent:newitemid, data:[{id:lastid, name:prop.text, value:"", helper:prop.helper}]});
+        });
+      }
+    }
+
+    function load_script()
+    {
+        save_value();
+        var source_id = get_source_id();
+        $.post("/load_script",{'source_id':source_id}, function(rsp){
+            if(rsp.success){
+                var $dg = $("#dgsd");
+                var treedata = jQuery.parseJSON(rsp.data);
+                $dg.treegrid('loadData',treedata);
+                reset_last_ids();
+    
+            }
+        },"JSON");
+    }
+    function save_script()
+    {
+        save_value();
+        var source_id = get_source_id();
+        if (source_id == ""){
+            alert("Please fill source_id!");
+            return;
+        }
+        var data = {};
+        data.source_id = source_id;
+        var treedata = $("#dgsd").treegrid("getData");
+        data.data = JSON.stringify(treedata);
+        $.post("/save_script", data, function(rsp){
+            alert(rsp.desc);
+        },"JSON");
+    }
+    function gen_script()
+    {
+        var $dg = $("#dgsd");
+        var source_id = $dg.treegrid("find",2).value;
+        var script_name = $dg.treegrid("find",3).value;
+        var vvalue=[];
+        $.each($dg.treegrid("getChildren", 1), function(i, item){
+            if (item.id < 4) return;
+            var hasChildren = $dg.treegrid("getChildren",item.id);
+            if (hasChildren.length > 0) return;
+            var parentName = $dg.treegrid("getParent", item.id).name;
+            var form_id = form_ids[parentName];
+            vvalue.push(form_id + '<----->' + findItemName(parentName, item.name) + '<----->' + item.value);
+        });
+                                                                 
+        $.post("gen_spider",{script_name:script_name,source_id:source_id,value:vvalue},function(data, status){
+            alert(data);
+            
+        });                                                                
+        
+    }
+    var showMeter;
+    function run_test()
+    {
+        var $dg = $("#dgsd");
+        var source_id = $dg.treegrid("find",2).value;
+        var script_name = $dg.treegrid("find",3).value;
+        alert('Spider will start! It will run within 5 minutes');
+       
+        $.get("excute_script",{script_name:script_name, source_id:source_id},function(data,status){
+            alert('Test Over !');
+            $("#debug_info").html(data);
+            $("#content").layout('expand','south');
+            $("#tabs").tabs("select","Info");
+        });
+        $("#content").layout('expand','south');
+        $("#dg_pid").datagrid({url:'/load_pid',queryParams:{source_id:source_id}});
+        $("#dg_pro").datagrid({url:'/load_pro',queryParams:{source_id:source_id}});
+        $("#dg_rev").datagrid({url:'/load_rev',queryParams:{source_id:source_id}});
+        showMeter = setTimeout(show_over, 5000);
+    }
+    function show_over()
+    {
+        var $dg = $("#dgsd");
+        var source_id = $dg.treegrid("find",2).value;                                                                   
+        $.get("excute_over",{source_id:source_id},function(data,status){
+            var do_nothing = "no alert";
+        });
+    }                                                                                    
+
+    var editingId=undefined;
+    function edit_value()
+    {
+        var $dg = $('#dgsd');
+        if (editingId != undefined){
+            $dg.treegrid('select', editingId);
+            return;
+        }
+        var row = $dg.treegrid('getSelected');
+        if (row){
+            editingId = row.id
+
+
+            $dg.treegrid('beginEdit', editingId);
+            var ed = $dg.treegrid('getEditor', {id:editingId, field:'value'});
+            $(ed.target).bind('keypress', function(event){
+                if(event.keyCode == '13')
+                    save_value();
+                if(event.keyCode == '27')
+                    cancel_edit();
+            });
+            $(ed.target).focus();
+                                                                 
+        }
+    }
+    function save_value()
+    {
+        if (editingId != undefined)
+        {
+            var t = $('#dgsd');
+            t.treegrid('endEdit', editingId);
+            editingId = undefined;
+            /*var persons = 0;
+            var rows = t.treegrid('getChildren');
+            for(var i=0; i<rows.length; i++)
+            {
+                var p = parseInt(rows[i].persons);
+                if (!isNaN(p)){
+                    persons += p;
+                }
+            }
+            var frow = t.treegrid('getFooterRows')[0];
+            frow.persons = persons;
+            t.treegrid('reloadFooter');*/
+        }
+    }
+    function cancel_edit()
+    {
+        if (editingId != undefined){
+            $('#dgsd').treegrid('cancelEdit', editingId);
+            editingId = undefined;
+        }
+    }
+    function delete_node()
+    {
+        var row = $('#dgsd').treegrid('getSelected');
+        if (row){
+            var selected_node = $("#dgsd").treegrid("getChildren",row.id);
+            if (selected_node.length > 0){
+                $("#dgsd").treegrid("remove", row.id);
+                reset_last_ids();
+            }
+        }
+    }
+    function dbl_click_row(row)
+    {
+        var $dg = $('#dgsd');
+        var hasChildren = $dg.treegrid("getChildren",row);
+        if (hasChildren.length > 0) return;
+        if (editingId != undefined)
+            save_value();
+        edit_value();
+    }
+    function get_source_id()
+    {
+        var source_id = $("#dgsd").treegrid("find",2).value;
+        return source_id;
+    }
+    function reset_last_ids()
+    {
+        lastid = 3;
+        lastLevelId = 3;
+        var $dg = $('#dgsd');
+        $.each($dg.treegrid('getChildren', 1), function(i, item){
+            if (item.id > lastid) lastid = item.id;
+            if ((item.name == 'Add Level' || item.name == 'Init Spider') && item.id > lastLevelId)
+                lastLevelId = item.id;
+                var hasChildren = $dg.treegrid("getChildren",item.id);
+                if (hasChildren.length > 0) 
+                    $dg.treegrid('enableDnd', item.id);
+        });
+    }
+    function findItemName(parentName, node_text)
+    {
+        var nodename = "";
+        $.each(menu_text, function(i, item){
+            if (item['text'] == parentName){
+                $.each(item['properties'], function(j, prop){
+                    if(prop['text'] == node_text){
+                        nodename = prop['name'];
+                    }
+                });
+            }
+        });
+        return nodename;
+    }
+    $(function(){
+      load_menu();
+    });
+               
+    
+  </script>
+
+</html>

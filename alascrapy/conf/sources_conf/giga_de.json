@@ -1,0 +1,40 @@
+{
+    "source_id": 49000230,
+    "validate_csv_fields":{
+        "product_id":{
+            "ID_kind":            {"required": false},
+            "ID_value":           {"required": false},
+            "ProductName":        {"required": true},
+            "source_id":          {"required": true},
+            "source_internal_id": {"required": false}
+        },
+        "product":{
+            "OriginalCategoryName": {"required": true},
+            "PicURL":               {"required": true},
+            "ProductManufacturer":  {"required": false},
+            "ProductName":          {"required": true},
+            "source_id":            {"required": true},
+            "source_internal_id":   {"required": false},
+            "TestUrl":              {"required": true}
+        },
+        "review":{
+            "Author":             {"required": false},
+            "award":              {"required": false},
+            "AwardPic":           {"required": false},
+            "countries":          {"required": false},
+            "DBaseCategoryName":  {"required": true},
+            "ProductName":        {"required": true},
+            "source_id":          {"required": true},
+            "source_internal_id": {"required": false},
+            "SourceTestRating":   {"required": false},
+            "SourceTestScale":    {"required": false},
+            "TestCons":           {"required": false},
+            "TestDateText":       {"required": false},
+            "TestPros":           {"required": false},
+            "TestSummary":        {"required": true},
+            "TestTitle":          {"required": false},
+            "TestUrl":            {"required": true},
+            "TestVerdict":        {"required": false}
+        }
+    }
+}

@@ -1,0 +1,113 @@
+{
+    "source_id": 263862,
+    "use_proxy": false,
+    "validate_csv_fields": {
+        "product": {
+            "ProductName": {
+                "required": true
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "source_id": {
+                "required": true
+            }, 
+            "TestUrl": {
+                "required": true
+            }, 
+            "ProductManufacturer": {
+                "required": false
+            }, 
+            "OriginalCategoryName": {
+                "required": true
+            }, 
+            "PicURL": {
+                "required": false
+            }
+        }, 
+        "product_id": {
+            "source_id": {
+                "required": true
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "ProductName": {
+                "required": true
+            }, 
+            "ID_value": {
+                "required": true
+            }, 
+            "ID_kind": {
+                "required": true
+            }
+        }, 
+        "review": {
+            "SourceTestRating": {
+                "required": true
+            }, 
+            "DBaseCategoryName": {
+                "required": true
+            }, 
+            "SourceTestScale": {
+                "required": true
+            }, 
+            "AwardPic": {
+                "required": false
+            }, 
+            "countries": {
+                "required": false
+            }, 
+            "Author": {
+                "required": true
+            }, 
+            "award": {
+                "required": false
+            }, 
+            "ProductName": {
+                "required": true
+            }, 
+            "TestCons": {
+                "required": true
+            }, 
+            "TestDateText": {
+                "required": true
+            }, 
+            "source_id": {
+                "required": true
+            }, 
+            "TestUrl": {
+                "required": true
+            }, 
+            "TestPros": {
+                "required": true
+            }, 
+            "TestTitle": {
+                "required": true
+            }, 
+            "TestVerdict": {
+                "required": false
+            }, 
+            "source_internal_id": {
+                "required": false
+            }, 
+            "TestSummary": {
+                "required": false
+            }
+        }
+    }, 
+    "feed_categories": {
+        "video_games_mp": "2016-01-28 16:08:35", 
+        "major_appliances_retail": "2016-01-29 16:06:21", 
+        "ce_mp": {
+            "part1": "2016-01-29 17:30:46", 
+            "part2": "2016-01-29 17:44:01"
+        }, 
+        "pc_mp": null, 
+        "ce_retail": null, 
+        "pc_retail": null, 
+        "video_games_retail": null, 
+        "major_appliances_mp": null
+    }, 
+    "use_proxy": false
+}

@@ -1,0 +1,18 @@
+{
+    "source_id": 10000015,
+    "spider_name": "sears_categories",
+    "spider_class_name": "SearsCategorySpider",
+    "enabled":true,
+    "additional_values":{},
+    "allow_redirects":true,
+    "category_separator_db":"›",
+    "category_separator_spider":"|",
+    "validate_csv_fields":{
+        "category":{
+                "source_id":        {"required": true},
+                "category_leaf":    {"required": true},
+                "category_path":    {"required": true},
+                "category_url":     {"required": true}
+        }
+    }
+}

@@ -1,0 +1,109 @@
+{
+    "source_id": 39000015,
+    "use_proxy": false,
+    "validate_csv_fields": {
+        "product": {
+            "ProductName": {
+                "required": true
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "TestUrl": {
+                "required": true
+            },
+            "PicURL": {
+                "required": false
+            },
+            "source_id": {
+                "required": true
+            },
+            "ProductManufacturer": {
+                "required": false
+            },
+            "OriginalCategoryName": {
+                "required": true
+            }
+        },
+        "product_id": {
+            "source_id": {
+                "required": true
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "ID_kind": {
+                "required": true
+            },
+            "ID_value": {
+                "required": true
+            },
+            "ProductName": {
+                "required": true
+            }
+        },
+        "review": {
+            "SourceTestRating": {
+                "required": true
+            },
+            "DBaseCategoryName": {
+                "required": true
+            },
+            "SourceTestScale": {
+                "required": true
+            },
+            "AwardPic": {
+                "required": false
+            },
+            "Author": {
+                "required": true
+            },
+            "countries": {
+                "required": false
+            },
+            "award": {
+                "required": false
+            },
+            "ProductName": {
+                "required": true
+            },
+            "TestCons": {
+                "required": true
+            },
+            "TestDateText": {
+                "required": true
+            },
+            "TestUrl": {
+                "required": true
+            },
+            "source_id": {
+                "required": true
+            },
+            "TestPros": {
+                "required": true
+            },
+            "TestTitle": {
+                "required": true
+            },
+            "TestVerdict": {
+                "required": false
+            },
+            "source_internal_id": {
+                "required": false
+            },
+            "TestSummary": {
+                "required": false
+            }
+        }
+    },
+    "feed_categories": {
+        "ce": null,
+        "vg": null,
+        "retail_home": null,
+        "marketplace_home": null,
+        "retail_kitchen": null,
+        "marketplace_kitchen": null,
+        "retail_lawngarden": null,
+        "marketplace_lawngarden": null
+    }
+}

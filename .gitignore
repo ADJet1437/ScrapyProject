@@ -1,0 +1,12 @@
+*.pyc
+*~
+*.egg
+build
+alascrapy.egg-info
+alascrapy/conf/alascrapy.conf
+.hg
+.idea
+.scrapy/httpcache/*
+/.tox/
+.vscode/settings.json
+venv/

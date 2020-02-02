@@ -1,0 +1,17 @@
+.combo-clear {  
+  background-color: #E0ECFF;  
+  width: 18px;  
+  height: 20px;  
+  overflow: hidden;  
+  display: inline-block;  
+  vertical-align: top;  
+  cursor: pointer;  
+  opacity: 0.6;  
+  filter: alpha(opacity=60);  
+  background: url('images/combo_clear.png') no-repeat center center;  
+}  
+.combo-clear-hover {  
+  opacity: 1.0;  
+  filter: alpha(opacity=100);  
+  background-color: #eaf2ff;  
+}

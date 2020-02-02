@@ -1,0 +1,153 @@
+-= Scraping with Scrapy =-
+
+With the redesign of our scraping systems to utilise Scrapy, we need to develop the following components and stick to a defined set of requirements to ensure that we do not stumble over the same pitfalls that we have previously. This document should serve as a high level design for the project outlining the approximate contents for each section that we will be creating or porting over. It should be updated to reflect any major changes during the initial implementation of the Scrapy solution.
+
+Note: This document can also be found in Google Docs under the title "alaScrapy High Level Design".
+
+- Best Practices -
+
+Previously we have been lacking in areas such as consistent code style, documentation, and testing. This project has been selected as a test bed for us to address and resolve these issues.
+
+= Formatting and documentation =
+
+To remedy the code style aspect of this issue, for this project we will be adhering to PEP 8 where possible. Alongside this, we should also be providing documentation strings throughout all the new scripts and modules such that we improve our ability to maintain and update our libraries.
+
+With these two simple steps in place, it should lower the learning curve required for anyone new to the project to step in and make changes where and when they are required.
+
+If you are making a significant change, e.g. writing one of the larger sections of the project, described in this document, do not hesitate to document your changes and the reasons behind how and why you have implemented the section. While it might add a little extra time after you’ve made your changes, just remember how much time it may save later for both you and others!
+
+= Testing =
+
+Thus far, we are lacking testing in the scraping packages, which does not lend itself to finding any errors or issues in our scripts particularly easily. Considerable manual effort tends to be required to ensure that one small change does not have unexpected consequences.
+
+All modules of this project should be implemented with unit testing and, where appropriate, Scrapy contracts though. The aim overall is to have each shared module and complex method tested by PyUnit and each Scrapy spider contract tested.
+
+Testing will be automated at some point (probably via Jenkins and/or hg commit hook) so keep this in mind while designing and writing your new tests.
+
+= Git Flow =
+
+This project will also be using a different branching strategy on the repository to the norm. Generally, we tend to only use the default branch, cloning it when necessary, making a change and pushing directly back.
+
+With Git Flow, this structure changes somewhat. We gain a development branch alongside our default branch which holds the latest changes we have made. When we want to create a feature, we branch from the development branch and, once finished, merge back into it. When we’re release ready, we then merge from the release point in our development branch to the default branch.
+
+While this is more complicated than we’re used to so far, it allows us to have a development branch which contains multiple changes which aren’t ready to immediately be used and once we have them all prepared, we can move them to default. In this scenario, default then gets merged back into development to ensure no release changes are missed from the development branch.
+
+= Repository Structure =
+
+The repository itself should be formatted in the following manner:
+
+alaScrapy/ 
+|-- alaScrapy/
+|   |-- conf/ 
+|   |   |-- sources_conf
+|   |   |   |-- gsmarena.json
+|   |   
+|   |-- spiders/
+|   |   |-- __init__.py
+|   |   |-- cnet_com.py
+|   |   |-- mediamarkt_nl.py
+|   |
+|   |-- test/ 
+|   |   |-- __init__.py 
+|   |   |-- test_main.py 
+|   |   
+|   |-- __init__.py 
+|   |-- scrapy.cfg 
+|
+|-- setup.py 
+|-- README
+
+This should keep the repository fairly clean and simple so that future generations can enjoy it as much as we do.
+
+
+- Modules -
+
+As this is quite a large and complex project, it will most likely be simplest to think of it as a series of modules which plug into the Scrapy framework. Each of these modules will add specific functionality and can most likely be worked on independently from the rest of the project to facilitate faster development.
+
+= Output =
+
+Handling the output from alaScrapy scripts to the rest of the world
+
+= Logging  =
+
+Handling the logging from alaScrapy to Graylog
+
+= SS Script Converter =
+
+Converting ScreenScraper scripts to a generic format
+
+= Generic Script =
+
+Supporting running the generic scripts coming over to alaScrapy
+
+= Incremental Update =
+
+Providing the ability to incrementally scrape
+
+= General Utilities =
+
+Other miscellaneous but valuable functionality, and general notes on system behaviour (e.g. Opt Out vs Opt In)
+
+
+- Output Module -
+
+In both ScreenScraper and FScraper, we have libraries and methods which allow us to write out to either a CSV file destined for Load or to a table in the database. The Scrapy library is going to be no different from this, we require a module to write everything out from alaScrapy to the rest of our system.
+
+= CSV Support =
+
+Currently we need the module to support output to the standard 3 CSV files which Load uses processes from the scrapers (products, product_id and review). These are expected to follow exactly the same format that the existing files have. Each file should contain the following values:
+
+ - Product: source_id, source_internal_id, ProductName, OriginalCategoryName, PicURL, ProductManufacturer, TestURL
+
+ - Product ID: source_id, source_internal_id, ProductName, ID_kind, ID_value
+
+ - Reviews: source_id, source_internal_id, ProductName, SourceTestRating, SourceTestScale, TestDateText, TestPros, TestCons, TestSummary, TestVerdict, Author, DBaseCategoryName, TestTitle, TestUrl, award, AwardPic, countries
+
+= Database Output =
+
+ScreenScraper is capable of running in a test mode where, instead of outputting to a CSV file, we write out to the ss_inbox_test database. This allows us to poke the data around a bit more than if we only have it in the CSV files. We can perform manual updates, and perform scraping on sites which we may not want to be added to the main database yet by using this functionality.
+
+Ideally it should be available simply on a toggle flag either at system level, source level, or both. If it were also configurable as to where we store products/reviews/etc to, it would probably be beneficial in the long run.
+
+= Logging  =
+
+One of the more straightforward modules, this will be integrated through the rest of our implementation to provide logging functionality to both file and graylog. The requirements for this package are quite simple; provide an interface which allows one call to output to both the log file and graylog while taking a log level and message.
+
+The one potential issue for this module is ensuring that it remains scalable when we have multiple spiders crawling at once. If we decide to use one singular log file, it will have to be careful to play nicely with other versions of the same module while may be trying to write to exactly the same place for example.
+
+One of the key desires behind the logging is to ensure that, should a website change its format from the format we’re set up to scrape, we immediately have log messages informing us of what and where something has occurred.
+
+= SS Script Converter =
+
+This part of the process is heavily linked to the Generic Script module as it will be the primary (probably sole) provider of converted ScreenScraper scripts. For each of the ScreenScraper scripts, we have an XML file containing a collection of regular expressions, and snippets of Java code. This converter script needs to pull out all of the appropriate regular expressions, order them and slot them into a predefined JSON format.
+
+The draft of this JSON format can be found here and will probably be updated once the project receives more work.
+
+Once we have the script scraped, we should be dropping it into a new database/table on Vinnie using the source as the key.
+
+= Generic Script =
+
+The Generic Script will pick up where SS Script Converter leaves off. It should read the JSON entry for each source from the database then use the information to perform a scrape of the site. It should be able to match the scraping performed by ScreenScraper as much as possible. If any script presents too many issues, it should flag it up after a given number of unsatisfactory results so that it can be analysed or rewritten.
+
+= Incremental Update =
+
+To attempt to reduce the amount of duplicate and unnecessary scraping we do, there is a determined push to provide an option for incremental scraping rather than scraping each source completely every time. This will probably be one of the more complex modules and should be built to either confine the list of pages that we scrape for a certain site, or to step in during a scrape and prevent us from rescraping previously collected data.
+
+As an example approach I offer the following:
+
+We can use Scrapy to go to the site we’re interested in updating, and proceed to scrape the category pages. With the category pages, we can then check which products/reviews we already have in our database and deliberately not scrape pages which are already present. 
+
+This approach would work quite nicely on sites which are simply either a single product or pro review without user reviews attached. An occasional re-scrape of important information can still be carried out, either by specifying that we keep all products/reviews from the last 6 months up to date, and then older information could be updated on a slower basis (once per week for example).
+
+The complication to this approach is in the user reviews. If the user reviews for a website are attached to a product page, we may to re-scrape the product page to get the reviews. Some websites publish the number of user reviews that they have on their customer page, for example, which would allow us to verify we have the same number of reviews and avoid re-scraping but this is far from guaranteed. For sites which aren’t quite so helpful, we may have to still head to each product page that we’re interested in, then use whatever tools we have available on the site to arrange the user reviews into a meaningful order before ignoring the ones we already have.
+
+= General Utilities =
+
+This section describes utility functionality that the system should be able to distribute and provide to all spiders.
+
+ - Opt Out vs Opt In
+
+The current ScreenScraper scripts are highly “Opt In” focused. Generally, we scrape the categories, they go to QA, and that’s that, no more category updates until we notice something is missing. This approach is now running into more and more issues where websites decide to add a new category and we completely ignore it (the most recent being a missing Xbox One category causing us to have collected no products or reviews from the website in question).
+
+We should, with the introduction of Scrapy, move to an Opt Out system. We can still use the existing tools.ss_category table in the database but need to identify which sources will be Opt Out. This could be either another small table or simply an extra column on to the review.sources table.
+
