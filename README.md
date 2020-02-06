@@ -7,10 +7,6 @@ get the ver 1.14.0 of fabric to be able to deploy
 pip install fabric==1.14.0
 ```
 
-### How to run tests locally
-This document is pretty useful for instructions on how to deploy and test:
-https://docs.google.com/document/d/1TSXLl7VK4rvOQUMmE3DDU6NJD54Oi2jUTWv2zXvTrYI/edit#
-
 
 #### With a virtualenv (without docker)
 ```bash
