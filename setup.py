@@ -8,7 +8,7 @@ setup(
     packages     = find_packages(),
     entry_points = {'scrapy': ['settings = alascrapy.settings']},
     install_requires=['scrapy==1.4.0',
-                      'Twisted==16.3.2',
+                      'Twisted==22.1.0',
                       'service_identity',
                       'graypy==0.3.1',
                       'pika',
