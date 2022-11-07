@@ -1,6 +1,6 @@
 requests
 amqplib >= 1.0.2
-scrapy==1.4.0
+scrapy==2.7.1
 Twisted==16.3.2
 service_identity
 graypy==0.3.1
